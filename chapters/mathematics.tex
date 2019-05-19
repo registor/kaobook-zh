@@ -1,0 +1,152 @@
+\setchapterstyle{kao}
+\setchapterpreamble[u]{\margintoc}
+\chapter{数学及盒子}
+\labch{mathematics}
+
+\section{定理}
+
+尽管大多数人抱怨看到一本充满公式式的书，数学却是许多书的重要组成部分。在这里，我们将说明一些可能性。我们认为定理、定义、注释和例子都应该在阴影的背景下加以强调;然而，颜色不应该是沉重的眼睛，所以我们选择了一种淡黄色。\sidenote{这里的所有框都是相同的颜色，因为我们不希望我们的文档看起来像\href{https://en.wikipedia.org/wiki/Harlequin}{Harlequin}。}
+
+\begin{definition}
+\labdef{openset}
+Let $(X, d)$ be a metric space. A subset $U \subset X$ is an open set 
+if, for any $x \in U$ there exists $r > 0$ such that $B(x, r) \subset 
+U$. We call the topology associated to d the set $\tau\textsubscript{d}$ 
+of all the open subsets of $(X, d).$
+\end{definition}
+
+\refdef{openset} 是非常重要的。我不是在开玩笑，但是我插入这个短语只是为了说明如何引用定义。下面的语句在不同的环境中反复出现。
+
+\begin{theorem}
+A finite intersection of open sets of (X, d) is an open set of (X, d), 
+i.e $\tau\textsubscript{d}$ is closed under finite intersections. Any 
+union of open sets of (X, d) is an open set of (X, d).
+\end{theorem}
+
+\begin{proposition}
+A finite intersection of open sets of (X, d) is an open set of (X, d), 
+i.e $\tau\textsubscript{d}$ is closed under finite intersections. Any 
+union of open sets of (X, d) is an open set of (X, d).
+\end{proposition}
+
+\marginnote{You can even insert footnotes inside the theorem 
+	environments; they will be displayed at the bottom of the box.}
+
+\begin{lemma}
+A finite intersection\footnote{I'm a footnote} of open sets of (X, d) is 
+an open set of (X, d), i.e $\tau\textsubscript{d}$ is closed under 
+finite intersections. Any union of open sets of (X, d) is an open set of 
+(X, d).
+\end{lemma}
+
+您可以安全地忽略定理\ldots 的内容，我假设，如果您对课本中的定理感兴趣，那么您已经了解了一些关于添加它们的经典方法。这些示例应该只显示您在这个类中可以做的所有事情。
+
+\begin{corollary}[Finite Intersection, Countable Union]
+A finite intersection of open sets of (X, d) is an open set of (X, d), 
+i.e $\tau\textsubscript{d}$ is closed under finite intersections. Any 
+union of open sets of (X, d) is an open set of (X, d).
+\end{corollary}
+
+\begin{proof}
+证明留给读者作为一个简单的练习。提示: \zhlipsum[2]
+\end{proof}
+
+\begin{definition}
+Let $(X, d)$ be a metric space. A subset $U \subset X$ is an open set 
+if, for any $x \in U$ there exists $r > 0$ such that $B(x, r) \subset 
+U$. We call the topology associated to d the set $\tau\textsubscript{d}$ 
+of all the open subsets of $(X, d).$
+\end{definition}
+
+\marginnote{
+	Here is a random equation, just because we can:
+	\begin{equation*}
+  x = a_0 + \cfrac{1}{a_1
+          + \cfrac{1}{a_2
+          + \cfrac{1}{a_3 + \cfrac{1}{a_4} } } }
+	\end{equation*}
+}
+
+\begin{example}
+Let $(X, d)$ be a metric space. A subset $U \subset X$ is an open set 
+if, for any $x \in U$ there exists $r > 0$ such that $B(x, r) \subset 
+U$. We call the topology associated to d the set $\tau\textsubscript{d}$ 
+of all the open subsets of $(X, d).$
+\end{example}
+
+\begin{remark}
+Let $(X, d)$ be a metric space. A subset $U \subset X$ is an open set 
+if, for any $x \in U$ there exists $r > 0$ such that $B(x, r) \subset 
+U$. We call the topology associated to d the set $\tau\textsubscript{d}$ 
+of all the open subsets of $(X, d).$
+\end{remark}
+
+As you may have noticed, definitions, example and remarks have 
+independent counters; theorems, propositions, lemmas and corollaries 
+share the same counter.
+
+\begin{remark}
+Here is how an integral looks like inline: $\int_{a}^{b} x^2 dx$, and 
+here is the same integral displayed in its own paragraph:
+\[\int_{a}^{b} x^2 dx\]
+\end{remark}
+
+We provide two files for the theorem styles: 
+\href{style/plaintheorems.sty}{plaintheorems.sty}, which you should 
+include if you do not want coloured boxes around theorems; and 
+\href{style/mdftheorems.sty}{mdftheorems.sty}, which is the one used for 
+this document.\sidenote{The plain one is not showed, but actually it is 
+exactly the same as this one, only without the yellow boxes.} Of course, 
+you will have to edit these files according to your taste and the 
+general style of the book.
+
+\section[Boxes \& Environments]{Boxes \& Custom Environments
+\sidenote[*1.6][]{Notice that in the table of contents and in the 
+	header, the name of this section is \enquote{Boxes \& Environments}; 
+	we achieved this with the optional argument of the \texttt{section} 
+	command.}}
+
+Say you want to insert a special section, an optional content or just 
+something you want to emphasise. We think that nothing works better than 
+a box in these cases. We used \Package{mdframed} to construct the ones 
+shown below. You can create and modify such environments by editing the 
+provided file \href{style/environments.sty}{environments.sty}.
+
+\begin{kaobox}[frametitle=盒子标题]
+\zhlipsum[3]
+\end{kaobox}
+
+如果设置了计数器，甚至可以创建自己的编号环境。
+
+\begin{kaocounter}
+\zhlipsum[4]
+\end{kaocounter}
+
+\section{Experiments}
+
+也可以在盒子里包装边注。我们鼓励大胆的读者尝试自己的实验，并让我知道结果。
+
+\marginnote[-2.2cm]{
+	\begin{kaobox}[frametitle=title of margin note]
+		使用kaobox盒子的边注.\\
+		(实际上, kaobox是在marginnote里面!)
+	\end{kaobox}
+}
+
+我相信许多其他特殊的事情是可能的与类\Class{kaobook}类。在开发过程中，我努力使它尽可能灵活，这样就可以不费太大力气地添加新特性。因此，我希望你们能在这门课的写作中找到最好的方式来表达自己，写一本书，写一篇报告或者写一篇论文，我也很想看看你们可以尝试的任何实验的结果。
+
+%\begin{margintable}
+	%\captionsetup{type=table,position=above}
+	%\begin{kaobox}
+		%\caption{caption}
+		%\begin{tabular}{ |c|c|c|c| }
+			%\hline
+			%col1 & col2 & col3 \\
+			%\hline
+			%\multirow{3}{4em}{Multiple row} & cell2 & cell3 \\ & cell5 
+			%%& cell6 \\ 
+			%& cell8 & cell9 \\
+			%\hline
+		%\end{tabular}
+	%\end{kaobox}
+%\end{margintable}

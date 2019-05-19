@@ -1,0 +1,102 @@
+\setchapterpreamble[u]{\margintoc}
+\chapter{类选项}
+\labch{options}
+
+在本章中，我将描述最常用的选项，从\Class{scrbook}继承的选项和特定于\Class{kao}的选项。传递给类的选项修改其默认行为;不过要注意，有些选项可能会导致意想不到的结果\ldots
+
+\section{\Class{KOMA} options}
+
+\Class{kaobook}类基于\Class{scrbook}，因此它理解您通常传递给该类的所有选项。如果您有足够的耐心，可以阅读\KOMAScript\xspace 指南。\sidenote{指南可以从\url{https://ctan.org/pkg/koma-script?lang=en}.}下载。
+
+加载类时传递给该类的每个\KOMAScript\xspace 选项都会自动激活。此外，在\Class{kaobook}中，一些选项修改了默认值。例如，字体大小为9.5pt，段落之间用空格分隔，\sidenote[-7mm][]{精确地说，段落之间用半行空格分隔:\Option{parskip}的值是\enquote{half}。}没有缩进标记。
+
+\section{\Class{kao} options}
+
+In the future I plan to add more options to set the paragraph formatting 
+(justified or ragged) and the position of the margins (inner or outer in 
+twoside mode, left or right in oneside mode).\sidenote{As of now, 
+paragraphs are justified, formatted with \Command{singlespacing} (from 
+the \Package{setspace} package) and \Command{frenchspacing}.}
+
+I take this opportunity to renew the call for help: everyone is 
+encouraged to add features or reimplement existing ones, and to send me 
+the results. You can find the GitHub repository at 
+\url{https://github.com/fmarotta/kaobook}.
+
+\begin{kaobox}[frametitle=To Do]
+实现\Option{justify}和\Option{margin}选项。为了与\KOMAScript\xspace 样式保持一致，它们应该接受一个简单开关作为参数，其中简单开关应该是\Option{true}或\Option{false}，或者\KOMAScript 支持的简单开关的其他标准值之一。有关更多信息，请参阅\KOMAScript\xspace 文档。
+\end{kaobox}
+
+The above box is an example of a \Environment{kaobox}, which will be 
+discussed more thoroughly in \frefch{mathematics}. Throughout the book I 
+shall use these boxes to remarks what still needs to be done.
+
+\section{Other things worth knowing}
+
+A bunch of packages are already loaded in the class because they are 
+needed for the implementation. These include:
+
+\begin{itemize}
+	\item etoolbox
+	\item calc
+	\item xifthen
+	\item xkeyval
+	\item xparse
+	\item xstring
+\end{itemize}
+
+Many more packages are loaded, but they will be discussed in due time. 
+Here, we will mention only one more set of packages, needed to change 
+the paragraph formatting (recall that in the future there will be 
+options to change this). In particular, the packages we load are:
+
+\begin{itemize}
+	\item ragged2e
+	\item setspace
+	\item hyphenat
+	\item microtype
+	\item needspace
+	\item xspace
+	\item xcolor (with options \Option{usenames,dvipsnames})
+\end{itemize}
+
+Some of the above packages do not concern paragraph formatting, but we 
+nevertheless grouped them with the others. By default, the main text is 
+justified and formatted with singlespacing and frenchspacing; the margin 
+text is the same, except that the font is a bit smaller.
+
+\section{Document Structure}
+
+We provide optional arguments to the \Command{title} and 
+\Command{author} commands so that you can insert short, plain text 
+versions of this fields, which can be used, typically in the half-title 
+or somewhere else in the front matter, through the commands 
+\Command{@plaintitle} and \Command{@plainauthor}, respectively. The PDF 
+properties \Option{pdftitle} and \Option{pdfauthor} are automatically 
+set by hyperref to the plain values if present, otherwise to the normal 
+values.\sidenote[-1.4cm][]{We think that this is an important point so 
+we remark it here. If you compile the document with pdflatex, the PDF 
+metadata will be altered so that they match the plain title and author 
+you have specified; if you did not specify them, the metadata will be 
+set to the normal title and author.}
+
+There are defined two page layouts, \Option{margin} and \Option{wide}, 
+and two page styles, \Option{plain} and \Option{fancy}. The layout 
+basically concern the width of the margins, while the style refers to 
+headers and footer; these issues will be 
+discussed in \frefch{layout}.\sidenote{For now, suffice it to say that pages with 
+the \Option{margin} layout have wide margins, while with the 
+\Option{wide} layout the margins are absent. In \Option{plain} pages the 
+headers and footer are suppressed, while in \Option{fancy} pages there 
+is a header.} 
+
+The commands \Command{frontmatter}, \Command{mainmatter}, and 
+\Command{backmatter} have been redefined in order to automatically 
+change page layout and style for these sections of the book. The front 
+matter uses the \Option{margin} layout and the \Option{plain} page 
+style. In the mainmatter the margins are wide and the headings are 
+fancy. In the appendix the style and the layout do not change; however 
+we use \Command{bookmarksetup\{startatroot\}} so that the bookmarks of 
+the chapters are on the root level (without this, they would be under 
+the preceding part). In the backmatter the margins shrink again and we 
+also reset the bookmarks root.

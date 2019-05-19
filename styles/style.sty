@@ -1,0 +1,351 @@
+\ProvidesPackage{styles/style}
+
+%----------------------------------------------------------------------------------------
+%	PAGE LAYOUT
+%----------------------------------------------------------------------------------------
+
+\usepackage[
+	a4paper,
+	%paperwidth=21.0cm,
+	%paperheight=29.7cm,
+	bottom=27.4mm,
+	inner=24.8mm,
+	%outer=24.8mm,
+	%right=2.183cm,
+	textwidth=107mm,
+	marginparsep=8.2mm,
+	marginparwidth=49.4mm,
+	%textheight=49\baselineskip,
+	includemp
+]{geometry}
+
+% TODO: see page 410 of the KOMA-script guide, it may be possible to include the layout in the \pagestyle with \beforeselectanypagestyle.
+
+\DeclareDocumentCommand{\pagelayout}{m}{
+	\ifthenelse{\equal{margin}{#1}}{\marginlayout}{}
+	\ifthenelse{\equal{wide}{#1}}{\widelayout}{}
+	\ifthenelse{\equal{fullwidth}{#1}}{\fullwidthlayout}{}
+}
+
+\newcommand{\marginlayout}{
+	\newgeometry{
+		top=27.4mm,
+		bottom=27.4mm,
+		inner=24.8mm,
+		%outer=24.8mm,
+		%right=2.183cm,
+		textwidth=107mm,
+		marginparsep=8.2mm,
+		marginparwidth=49.4mm,
+		%textheight=49\baselineskip,
+		includemp
+	}
+}
+
+\newcommand{\widelayout}{
+	\newgeometry{
+		top=27.4mm,
+		bottom=27.4mm,
+		inner=24.8mm,
+		outer=24.8mm,
+		%right=2.183cm,
+		%textwidth=107mm,
+		marginparsep=0mm,
+		marginparwidth=0mm,
+		%textheight=49\baselineskip,
+		ignoremp,
+	}
+}
+
+\newcommand{\fullwidthpage}{
+	\newgeometry{
+		top=0cm,
+		bottom=0cm,
+		inner=0cm,
+		outer=0cm,
+		marginparwidth=0cm,
+		marginparsep=0cm,
+		ignoremp
+	}
+}
+
+%----------------------------------------------------------------------------------------
+%	HEADERS AND FOOTERS
+%----------------------------------------------------------------------------------------
+
+\RequirePackage{scrlayer-scrpage}       % Customise head and foot regions
+\setlength{\headheight}{115pt}			% Enlarge the header
+
+% Headings styles
+\renewpagestyle{scrheadings}{
+	{\hspace{-\marginparwidth}\hspace{-\marginparsep}\makebox[\overflowingheadlen][l]{%
+		\parbox[t][1.7cm][c]{2em}{\hfill\thepage}
+		\makebox[2em][c]{\rule[-1.15cm]{1pt}{1.55cm}}
+		\parbox[t][1.7cm][c]{\textwidth}{\leftmark}}}%
+	{\makebox[\overflowingheadlen][r]{%
+		\parbox[t][1.7cm][c]{\textwidth}{\hfill\rightmark}%
+		\makebox[2em][c]{\rule[-1.15cm]{1pt}{1.55cm}}%
+		\parbox[t][1.7cm][c]{2em}{\thepage}}}
+	{\makebox[\overflowingheadlen][r]{%
+		\parbox[t][1.7cm][c]{\textwidth}{\hfill\rightmark}%
+		\makebox[2em][c]{\rule[-1.15cm]{1pt}{1.55cm}}%
+		\parbox[t][1.7cm][c]{2em}{\thepage}}}
+}{
+	{}%
+	{}%
+	{}
+}
+
+\renewpagestyle{plain.scrheadings}{
+	{}%
+	{}%
+	{}
+}{
+	{}%
+	{}%
+	{}
+}
+
+\newpagestyle{pagenum.scrheadings}{
+	{}%
+	{}%
+	{}
+}{
+	{\thepage}%
+	{\hfill\thepage}%
+	{}
+}
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER HEADING STYLES
+%----------------------------------------------------------------------------------------
+
+\DeclareDocumentCommand{\setchapterstyle}{m}{%
+	\ifthenelse{\equal{plain}{#1}}{\chapterstyleplain}{}
+	\ifthenelse{\equal{lines}{#1}}{\chapterstylelines}{}
+	\ifthenelse{\equal{kao}{#1}}{\chapterstylekao}{}
+}
+
+% The default definition in KOMA script
+\DeclareDocumentCommand{\chapterstyleplain}{}{%
+	\renewcommand{\chapterlinesformat}[3]{%
+		\@hangfrom{##2}{##3}}
+	\renewcommand*{\chapterformat}{%
+		\mbox{\chapappifchapterprefix{\nobreakspace}\thechapter%
+		\autodot\IfUsePrefixLine{}{\enskip}}}
+
+	\RedeclareSectionCommand[beforeskip=0cm,afterskip=1cm]{chapter}
+	\setlength{\mtocshift}{-3.2cm}
+}
+
+% The Kao style
+\DeclareDocumentCommand{\chapterstylekao}{}{%
+	\renewcommand*{\chapterformat}{%
+		\mbox{\chapappifchapterprefix{\nobreakspace}\scalebox{2.85}{\thechapter\autodot}}
+	}
+	\renewcommand\chapterlinesformat[3]{%
+		\vspace*{-4.5cm}
+		\makebox[\textwidth+\marginparsep+\marginparwidth]{%
+			\parbox[b]{\textwidth}{\hfill ##3}%
+			\makebox[\marginparsep][c]{\rule[-.35cm]{1pt}{5.7cm}}%
+			\parbox[b]{\marginparwidth}{##2}%
+		}
+	}
+
+	\RedeclareSectionCommand[beforeskip=0cm,afterskip=1cm]{chapter}
+	\setlength{\mtocshift}{0mm}
+}
+
+% Lines
+\renewcommand{\hrulefill}[1][0.4pt]{%
+	\leavevmode\leaders\hrule height #1\hfill\kern\z@%
+}
+\DeclareDocumentCommand{\chapterstylelines}{}
+{
+	\renewcommand*{\chapterformat}
+	{
+	  \chapappifchapterprefix{\nobreakspace}\scalebox{3.5}{\thechapter\autodot}
+	}
+	\renewcommand\chapterlinesformat[3]
+	{
+	  %\vspace*{-1cm}%
+	  \leavevmode
+	  \makebox[\textwidth+\marginparsep+\marginparwidth]{%
+		\makebox[\textwidth][l]{\hrulefill[1pt]##2}%\hfill%\par%\bigskip
+		\makebox[\marginparsep][l]{}%
+		\makebox[\marginparwidth][l]{}%
+	  }\\
+	  %\vspace{.5cm}
+	  \makebox[\textwidth+\marginparsep+\marginparwidth]{%
+		\makebox[\textwidth][l]{##3}%
+		\makebox[\marginparsep][l]{}%
+		\makebox[\marginparwidth][l]{}%
+	  }\\
+	  \makebox[\textwidth+\marginparsep+\marginparwidth]{%
+		\hrulefill[1.1pt]%
+		%\makebox[\textwidth][l]{\hrulefill}%
+		%\makebox[\marginparsep][l]{\hrulefill}%
+		%\makebox[\marginparwidth][l]{\hrulefill}%
+	  }
+	}
+
+	\RedeclareSectionCommand[beforeskip=0cm,afterskip=1cm]{chapter}
+	\setlength{\mtocshift}{-2.5cm}
+}
+
+% Image (Used internally for \chapterimage; normal users should not need this command)
+\DeclareDocumentCommand{\chapterstyleimage}{}{%
+	\renewcommand*{\chapterformat}{%
+		\mbox{\chapappifchapterprefix{\nobreakspace}\thechapter%
+		\autodot\IfUsePrefixLine{}{\enskip}}
+	}
+	\renewcommand{\chapterlinesformat}[3]{%
+		\begin{tikzpicture}[remember picture, overlay]
+			\node[
+				anchor=west,
+				xshift=-3cm,
+				%xshift=\overflowingheadlen,
+				yshift=1.15cm,
+				rectangle,
+				%very thick,
+				%draw=white,
+				%rounded corners=10pt,
+				fill=gray!20!white,
+				fill opacity=0.8,
+				inner sep=14pt,
+				text opacity=1,
+				text centered,
+				%minimum width=\textwidth,
+				minimum width=\paperwidth+3cm
+			]{\makebox[\textwidth]{\@hangfrom{##2}{##3}}};
+			\node[
+				anchor=west,
+				xshift=-3cm,
+				yshift=2mm,
+				rectangle,
+				fill=white,
+				minimum height=.5cm,
+				minimum width=\paperwidth+3cm,
+			]{};
+		\end{tikzpicture}
+	}
+}
+
+% Takes as input the image path and optionally the "beforeskip"
+\DeclareDocumentCommand{\setchapterimage}{O{5.5cm} m}
+{
+	\setchapterpreamble[o]{
+		\vspace*{-2.7cm}\hspace*{-2.56cm}
+		\includegraphics[width=\paperwidth,height=#1+2.7cm,keepaspectratio=false]{#2}
+	}
+
+	\chapterstyleimage
+
+	% beforeskip=-(figure_height-top_margin)
+	\RedeclareSectionCommand[beforeskip=-#1, afterskip=.6cm]{chapter}
+	\setlength{\mtocshift}{0cm}%
+}
+
+% By default start with plain style
+\chapterstyleplain
+
+%----------------------------------------------------------------------------------------
+%	ENCODING AND FONTS
+%----------------------------------------------------------------------------------------
+
+\RequirePackage[english]{babel} % Load characters and hyphenation
+\RequirePackage[T1]{fontenc} % utf8 encoding in the output (.pdf) file
+\RequirePackage[utf8]{inputenc} % utf8 encoding in the input (.tex) file
+\RequirePackage[english=british]{csquotes}	% English quotes
+
+%\RequirePackage{fourier}
+\usepackage{mathpazo}
+%\usepackage{Baskervaldx}
+\usepackage[scaled]{helvet}
+%\usepackage{avant}
+%\usepackage{courier} % monospace font
+\usepackage[scaled=.85]{beramono} % monospace font
+\usepackage[cal=boondoxo]{mathalfa} % mathcal from STIX, unslanted a bit
+\usepackage[cmintegrals,bigdelims,vvarbb]{newtxmath} % 
+%\usepackage[baskervaldx,cmintegrals,bigdelims,vvarbb]{newtxmath} % 
+%math italic letters from Baskervaldx
+
+%\addtokomafont{disposition}{\rmfamily\normalfont\itshape}
+%\addtokomafont{title}{\normalfont\itshape}
+%\addtokomafont{part}{\fontfamily{pplx}\selectfont\itshape\bfseries}
+\addtokomafont{part}{\normalfont\scshape\bfseries}
+\addtokomafont{chapter}{\normalfont\bfseries}
+\addtokomafont{section}{\normalfont\bfseries}
+\addtokomafont{subsection}{\normalfont\bfseries}
+\addtokomafont{subsubsection}{\normalfont\bfseries}
+\addtokomafont{paragraph}{\normalfont\bfseries}
+\addtokomafont{partentry}{\normalfont\scshape\bfseries}
+\addtokomafont{chapterentry}{\normalfont\bfseries}
+\setkomafont{descriptionlabel}{\normalfont\bfseries}
+%\addtokomafont{caption}{\footnotesize}
+%\makeatletter
+%\addtokomafont{captionlabel}{\@margin@par}
+%\makeatother
+
+% When using the Palatino font, it is better to use a slightly larger stretch.
+\setstretch{1.10}
+
+%----------------------------------------------------------------------------------------
+%	COLOURS
+%----------------------------------------------------------------------------------------
+
+%\addtokomafont{title}{\color{Maroon}}
+%\addtokomafont{part}{\color{Maroon}}
+%\addtokomafont{chapter}{\color{Maroon}}
+%\addtokomafont{section}{\color{Maroon}}
+%\addtokomafont{subsection}{\color{Maroon}}
+%\addtokomafont{subsubsection}{\color{Maroon}}
+%\addtokomafont{paragraph}{\color{Maroon}}
+%\addtokomafont{captionlabel}{\color{DarkBlue}}
+%\addtokomafont{pagenumber}{\color{Maroon}}
+
+\hypersetup{
+	%anchorcolor=Red,
+	%citecolor=DarkOrange!70!black,
+	citecolor=OliveGreen,
+	%filecolor=Red,
+	%linkcolor=DarkBlue,
+	linkcolor=Black,
+	%menucolor=Red,
+	%runcolor=Red,
+	urlcolor=OliveGreen,
+}
+%
+%----------------------------------------------------------------------------------------
+%	NUMBERING
+%----------------------------------------------------------------------------------------
+
+\setcounter{secnumdepth}{1} % Number only up to sections
+
+%\counterwithin*{sidenote}{chapter} % Uncomment to reset the sidenote counter at each chapter
+%\counterwithout{sidenote}{chapter} % Uncomment to have one sidenote counter for the whole document
+
+%----------------------------------------------------------------------------------------
+%	TOC, LOF & LOT
+%----------------------------------------------------------------------------------------
+
+\RequirePackage{tocbasic}
+\setuptoc{toc}{totoc}
+% Levels in table of contents
+\setcounter{tocdepth}{\subsectiontocdepth}
+
+\PassOptionsToClass{toc=listof}{\@baseclass}
+\PassOptionsToClass{toc=index}{\@baseclass}
+\PassOptionsToClass{toc=bibliography}{\@baseclass}
+
+% List of figures title as "Figures"
+\renewcaptionname{english}{\contentsname}{详细目录}
+\renewcaptionname{english}{\listfigurename}{插\ 图\ 目\ 录}
+\renewcaptionname{english}{\listtablename}{表\ 格\ 目\ 录}
+\newcaptionname{english}{\listtheoremname}{定\ 理\ 目\ 录}
+
+\DeclareTOCStyleEntry[level=1,indent=0em,numwidth=2em]%
+{tocline}{figure}
+\DeclareTOCStyleEntry[level=1,indent=0em,numwidth=2em]%
+{tocline}{table}
+

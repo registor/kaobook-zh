@@ -1,0 +1,181 @@
+\ProvidesPackage{styles/mdftheorems}
+
+% Use mdframed to shade the background of theorems
+
+\let\openbox\relax
+\usepackage{amsmath} % Improved mathematics
+\usepackage{amsfonts} % Mathematical fonts
+\usepackage{amssymb} % AMS symbols and environments
+\usepackage{amsthm} % Mathematical environments
+\usepackage{thmtools}
+\usepackage{tikz}
+\usepackage[framemethod=TikZ]{mdframed}
+
+% Box style
+\mdfsetup{skipabove=\topskip,skipbelow=0pt}%-.5\topskip}
+\mdfdefinestyle{mdfkao}{
+	skipabove=\topskip,
+	skipbelow=\topskip, % Does not work :(
+	rightmargin=0pt,
+	leftmargin=0pt,
+	innertopmargin=7pt,
+	innerbottommargin=3pt,
+	innerrightmargin=5pt,
+	innerleftmargin=5pt,
+	topline=false,
+	bottomline=false,
+	rightline=false,
+	leftline=false,
+	%linewidth=1pt,
+	%roundcorner=0pt,
+	%font={},
+	%frametitlefont={},
+	frametitlerule=true,
+	%linecolor=black,
+	%backgroundcolor=LightBlue,
+	%fontcolor=black,
+	%frametitlebackgroundcolor=LightBlue,
+}
+
+% Theorem styles
+\declaretheoremstyle[
+	%spaceabove=.5\thm@preskip,
+	%spacebelow=.5\thm@postskip,
+	%headfont=\normalfont\bfseries,%\scshape,
+	%notefont=\normalfont, notebraces={ (}{)},
+	bodyfont=\normalfont\itshape,
+	%headformat={\NAME\space\NUMBER\space\NOTE},
+	headpunct={},
+	%postheadspace={.5em plus .1em minus .1em},
+	%prefoothook={\hfill\qedsymbol}
+]{kaoplain}
+
+\declaretheoremstyle[
+	%spaceabove=.5\thm@preskip,
+	%spacebelow=.5\thm@postskip,
+	%headfont=\normalfont\bfseries,%\scshape,
+	%notefont=\normalfont, notebraces={ (}{)},
+	bodyfont=\normalfont\itshape,
+	%headformat={\NAME\space\NUMBER\space\NOTE},
+	headpunct={},
+	postheadspace={.5em plus .1em minus .1em},
+	%prefoothook={\hfill\qedsymbol}
+]{kaodefinition}
+
+\declaretheoremstyle[
+	%spaceabove=.5\thm@preskip,
+	%spacebelow=.5\thm@postskip,
+	%headfont=\normalfont\bfseries,
+	%notefont=\normalfont, notebraces={ (}{)},
+	%bodyfont=\normalfont,
+	%headformat={\footnotesize$\triangleright$\space\normalsize\NAME\space\NUMBER\space\NOTE},
+	%headformat={\NAME\space\NUMBER\space\NOTE},
+	headpunct={},
+	postheadspace={.5em plus .1em minus .1em},
+	%refname={theorem,theorems},
+	%Refname={Theorem,Theorems},
+]{kaoremark}
+
+\declaretheoremstyle[
+	%spaceabove=.5\thm@preskip,
+	%spacebelow=.5\thm@postskip,
+	%headfont=\normalfont\bfseries,
+	%notefont=\normalfont, notebraces={ (}{)},
+	%bodyfont=\normalfont,
+	%headformat={\NAME\space\NUMBER\space\NOTE},
+	headpunct={},
+	postheadspace={.5em plus .1em minus .1em},
+	%prefoothook={\hfill\qedsymbol}
+	%refname={theorem,theorems},
+	%Refname={Theorem,Theorems},
+]{kaoexample}
+
+\theoremstyle{kaoplain}
+\declaretheorem[
+	name=定理,
+	style=kaoplain,
+	refname={定理,定理},
+	Refname={定理,定理},
+	numberwithin=section,
+	mdframed={
+		style=mdfkao,
+		backgroundcolor=Goldenrod!45!white,
+		frametitlebackgroundcolor=Goldenrod!45!white,
+	},
+]{theorem}
+\declaretheorem[
+	name=命题,
+	refname={命题,命题},
+	Refname={命题,命题},
+	sibling=theorem,
+	mdframed={
+		style=mdfkao,
+		backgroundcolor=Goldenrod!45!white,
+		frametitlebackgroundcolor=Goldenrod!45!white,
+	},
+]{proposition}
+\declaretheorem[
+	name=引理,
+	refname={引理,引理},
+	Refname={引理,引理},
+	sibling=theorem,
+	mdframed={
+		style=mdfkao,
+		backgroundcolor=Goldenrod!45!white,
+		frametitlebackgroundcolor=Goldenrod!45!white,
+	},
+]{lemma}
+\declaretheorem[
+	name=推论,
+	refname={推论,推论},
+	Refname={推论,推论},
+	sibling=theorem,
+	mdframed={
+		style=mdfkao,
+		backgroundcolor=Goldenrod!45!white,
+		frametitlebackgroundcolor=Goldenrod!45!white,
+	},
+]{corollary}
+
+\theoremstyle{kaodefinition}
+\declaretheorem[
+	name=定义,
+	refname={定义,定义},
+	Refname={定义,定义},
+	numberwithin=section,
+	mdframed={
+		style=mdfkao,
+		backgroundcolor=Goldenrod!45!white,
+		frametitlebackgroundcolor=Goldenrod!45!white,
+	},
+]{definition}
+
+\theoremstyle{kaoremark}
+\declaretheorem[
+	name=备注,
+	refname={备注,备注},
+	Refname={备注,备注},
+	numberwithin=section,
+	mdframed={
+		style=mdfkao,
+		backgroundcolor=Goldenrod!45!white,
+		frametitlebackgroundcolor=Goldenrod!45!white,
+	},
+]{remark}
+
+\theoremstyle{kaoexample}
+\declaretheorem[
+	name=例,
+	refname={例,例},
+	Refname={例,例},
+	numberwithin=section,
+	mdframed={
+		style=mdfkao,
+		backgroundcolor=Goldenrod!45!white,
+		frametitlebackgroundcolor=Goldenrod!45!white,
+	},
+]{example}
+
+%\renewcommand{\thetheorem}{\arabic{chapter}.\arabic{section}.\arabic{theorem}}
+%\renewcommand{\thetheorem}{\arabic{subsection}.\arabic{theorem}}
+%\renewcommand{\qedsymbol}{$\blacksquare$}
